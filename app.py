@@ -14,7 +14,7 @@ st.set_page_config(
     initial_sidebar_state = 'auto'
 )
 
-st.image('logo.png')
+st.image('image/logo.png')
 st.write('''
 # Image to Text (OCR)
 This app **Extracts the Text from the given Image.!**
