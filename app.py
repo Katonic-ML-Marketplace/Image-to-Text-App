@@ -4,9 +4,8 @@ from PIL import Image
 import streamlit as st
 import easyocr as ocr
 
+im = Image.open('image/favicon.ico')
 
-response = requests.get(url='https://katonic.ai/favicon.ico')
-im = Image.open(BytesIO(response.content))
 st.set_page_config(
     page_title='Image to text (OCR)', 
     page_icon = im, 
@@ -20,9 +19,9 @@ st.write('''
 This app **Extracts the Text from the given Image.!**
 ''')
 st.write('---')
-text = st.text_input('Enter Image URL')
 
-if len(text) > 1:
+def get_image_by_url(text):
+   if len(text) > 1:
     response = requests.get(text, stream=True)
     with Image.open(BytesIO(response.content)) as image:
         st.subheader('Image')
@@ -30,20 +29,28 @@ if len(text) > 1:
         reader = ocr.Reader(['en'])
         result = reader.readtext(response.content)
         result_text = [text[1] for text in result]
-        st.text(' '.join(result_text))
+        st.subheader('Extracted Text: ')
+        st.success(' '.join(result_text))
     st.balloons()
-else:
-    st.info('Please, Upload an Image to process...')
+   else:
+        st.info('Please, Upload an Image to process...') 
 
+def get_image_via_upload(img):
+    if img is not None:
+        reader = ocr.Reader(['en'])
+        output_img = reader.readtext(img.getvalue())
+        cord = [text[1] for text in output_img]
+        st.image(Image.open(img), width=400)
+        st.subheader('Extracted Text: ')
+        st.success(' '.join(cord))
+    else:
+        st.info('Please, Upload an Image to process...') 
+
+
+Text = st.text_input('Enter Image URL')
+get_image_by_url(Text)
 img = st.file_uploader('Upload Image')
-
-if img is not None:
-    reader = ocr.Reader(['en'])
-    output_img = reader.readtext(img.getvalue())
-    cord = [text[1] for text in output_img]
-    st.image(Image.open(img), width=400)
-    st.subheader('Extracted Text: ')
-    st.text(' '.join(cord))
+get_image_via_upload(img)
 
 hide_streamlit_style = '''
             <style>
