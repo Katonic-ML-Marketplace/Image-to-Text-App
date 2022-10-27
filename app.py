@@ -47,8 +47,8 @@ def get_image_via_upload(img):
         st.info('Please, Upload an Image to process...') 
 
 
-Text = st.text_input('Enter Image URL')
-get_image_by_url(Text)
+input_text = st.text_input('Enter Image URL')
+get_image_by_url(input_text)
 img = st.file_uploader('Upload Image')
 get_image_via_upload(img)
 
