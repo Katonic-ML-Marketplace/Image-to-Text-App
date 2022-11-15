@@ -1,4 +1,4 @@
-# Image-to-Text-app
+# Image to Text App
 This app extracts the Text from the given Image.
 
 ## Description
