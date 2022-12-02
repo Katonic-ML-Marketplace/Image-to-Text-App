@@ -2,6 +2,7 @@ from io import BytesIO
 from PIL import Image
 import streamlit as st
 import easyocr as ocr
+import requests
 
 im = Image.open('image/favicon.ico')
 
